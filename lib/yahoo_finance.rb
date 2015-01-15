@@ -165,13 +165,13 @@ end
 
   def self.read_quotes(symb_str, cols)
      columns = "#{cols.map {|col| COLUMNS[col] }.join('')}"
-     conn = open("http://download.finance.yahoo.com/d/quotes.csv?s=#{URI.escape(symb_str)}&f=#{columns}")
+     conn = open("http://download.finance.yahoo.com/d/quotes.csv?s=#{symb_str}&f=#{columns}")
      CSV.parse(conn.read, :headers => cols)
   end
 
   def self.read_historical(symbol, options)
      params = {
-       :s => URI.escape(symbol),
+       :s => symbol,
        :g => HISTORICAL_MODES[options[:period]],
        :ignore => '.csv',
      }
@@ -201,7 +201,7 @@ end
 
   def self.read_splits(symbol, options)
      params = {
-       :s => URI.escape(symbol),
+       :s => symbol,
        :g => 'v'
      }
      if options[:start_date]
